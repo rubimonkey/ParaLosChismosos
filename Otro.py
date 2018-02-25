@@ -13,7 +13,7 @@ def read(path):
         timestamp2 = timestampAux[1].split(":")
         print(timestamp1[0]+timestamp1[1]+timestamp1[2]+timestamp2[0]+timestamp2[1]+timestamp2[2])
         #Creamos un archivo auxiliar como base de datos
-        file = open(path+"\\tiemposAOrdenar.txt","a")
+        file = open(path+"tiemposAOrdenar.txt","a")
         file.write(timestamp1[0]+timestamp1[1]+timestamp1[2]+timestamp2[0]+timestamp2[1]+timestamp2[2]+"#"+filename+"*")
 
     file.close()
@@ -33,9 +33,12 @@ def quickSortHelper(alist,first,last):
     #print(alist, "Alist")
 
 
+def getCosa(v):
+    aux = v.split("#")
+    return int(aux[0])
+
 def partition(alist,first,last):
-    aux = alist[first].split("#")
-    pivotvalue = int(aux[0])
+    pivotvalue = getCosa(alist[first])
     print(pivotvalue, "PV")
 
     leftmark = first+1
@@ -43,30 +46,28 @@ def partition(alist,first,last):
 
     done = False
     while not done:
+        print(getCosa(alist[leftmark]), "AL", getCosa(alist[rightmark]), "AR")
 
-        auxLeft = alist[leftmark].split("#")
-        auxLeft = int(auxLeft[0])
-        auxRight = alist[rightmark].split("#")
-        auxRight = int(auxRight[0])
-        print(auxLeft, "AL", auxRight, "AR")
-
-        while leftmark <= rightmark and auxLeft <= pivotvalue:
+        while leftmark <= rightmark and getCosa(alist[leftmark]) <= pivotvalue:
             leftmark = leftmark + 1
+            print("move left to right")
 
-        while auxRight >= pivotvalue and rightmark >= leftmark:
+        while getCosa(alist[rightmark]) >= pivotvalue and rightmark >= leftmark:
             rightmark = rightmark -1
+            print("move right to left")
 
         if rightmark < leftmark:
             done = True
+            print("done")
         else:
             temp = alist[leftmark]
             alist[leftmark] = alist[rightmark]
             alist[rightmark] = temp
+            print("swap")
 
     temp = alist[first]
     alist[first] = alist[rightmark]
     alist[rightmark] = temp
-
 
     return rightmark
 
@@ -88,16 +89,16 @@ def binarySearch(alist, item):
 
     return found
 
-pathIn = 'C:\\Users\\Rubi\\Documents\\stan'
+pathIn = './'
 #read(pathIn) #comentas esta línea cuando el archivo txt ya existe
 
-f = open(pathIn+"\\tiemposAOrdenar.txt", 'r')
+f = open(pathIn+"tiemposAOrdenar.txt", 'r')
 content = f.read()
 arreglo = content.split("*")
 #Acomodar el arreglo de acuerdo a la hr
-print(arreglo)
+print("\n".join(arreglo))
 quickSort(arreglo)
-print(arreglo)
+print("\n".join(arreglo))
 #alist = [20341219920427,20341219920426,20341219920423,17203412199204,77203412199204,32034121992071,2034121994274,55203412199207]
 #quickSort(alist)
 #print(alist)
