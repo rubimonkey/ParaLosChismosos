@@ -39,31 +39,31 @@ def getCosa(v):
 
 def partition(alist,first,last):
     pivotvalue = getCosa(alist[first])
-    print(pivotvalue, "PV")
+    #print(pivotvalue, "PV")
 
     leftmark = first+1
     rightmark = last
 
     done = False
     while not done:
-        print(getCosa(alist[leftmark]), "AL", getCosa(alist[rightmark]), "AR")
+        #print(getCosa(alist[leftmark]), "AL", getCosa(alist[rightmark]), "AR")
 
         while leftmark <= rightmark and getCosa(alist[leftmark]) <= pivotvalue:
             leftmark = leftmark + 1
-            print("move left to right")
+            #print("move left to right")
 
         while getCosa(alist[rightmark]) >= pivotvalue and rightmark >= leftmark:
             rightmark = rightmark -1
-            print("move right to left")
+            #print("move right to left")
 
         if rightmark < leftmark:
             done = True
-            print("done")
+            #print("done")
         else:
             temp = alist[leftmark]
             alist[leftmark] = alist[rightmark]
             alist[rightmark] = temp
-            print("swap")
+            #print("swap")
 
     temp = alist[first]
     alist[first] = alist[rightmark]
@@ -73,16 +73,17 @@ def partition(alist,first,last):
 
 def binarySearch(alist, item):
     first = 0
-    last = len(alist)-1
+    last = len(alist)-2
     found = False
 
     while first<=last and not found:
         midpoint = (first + last)//2
-        if alist[midpoint] == item:
-            print(alist)
+        if getCosa(alist[midpoint]) == item:
+            aux = alist[midpoint].split("#")
+            print(aux[1])
             found = True
         else:
-            if item < alist[midpoint]:
+            if item < getCosa(alist[midpoint]):
                 last = midpoint-1
             else:
                 first = midpoint+1
@@ -96,12 +97,11 @@ f = open(pathIn+"tiemposAOrdenar.txt", 'r')
 content = f.read()
 arreglo = content.split("*")
 #Acomodar el arreglo de acuerdo a la hr
-print("\n".join(arreglo))
 quickSort(arreglo)
 print("\n".join(arreglo))
 #alist = [20341219920427,20341219920426,20341219920423,17203412199204,77203412199204,32034121992071,2034121994274,55203412199207]
 #quickSort(alist)
 #print(alist)
 #testlist = arreglo
-#print(binarySearch(testlist, 3))
+print(binarySearch(arreglo, 199004272034133))
 #print(binarySearch(testlist, 16))
